@@ -112,6 +112,36 @@ following contents:
 
     com.example.hello.NativeService.new.basicLoad(JRuby.runtime)
 
+We also need to adjust our `HelloWorld` Java implementation. All of the
+methods that are invoked from Ruby must now return Ruby types, not Java
+types. Change `src/main/com/example/hello/HelloWorld.java` to:
+
+    package com.example.hello;
+
+    import org.jruby.Ruby;
+    import org.jruby.RubyClass;
+    import org.jruby.RubyObject;
+    import org.jruby.RubyString;
+    import org.jruby.anno.JRubyMethod;
+
+    public class HelloWorld extends RubyObject {
+      public HelloWorld(final Ruby runtime, final RubyClass rubyClass) {
+        super(runtime, rubyClass);
+      }
+
+      @JRubyMethod(name = "hello_world")
+      public RubyString helloWorld() {
+        return RubyString.newString(getRuntime(), "Ruby hello, world!");
+      }
+    }
+
+The following modifications were needed:
+
+- `HelloWorld` class now derives from `RubyObject`.
+- The class must define a constructor taking `runtime` and `rubyClass` arguments.
+- `JRubyMethod` annotation is required.
+- `helloWorld` method must now return `RubyString` and not Java `String`.
+
 Now, instead of the clients of the library needing to require the `.jar` file,
 a Ruby file provided with the library will do so; subsequently, this
 bootstrap file will load our service which will define the `HelloWorld`
