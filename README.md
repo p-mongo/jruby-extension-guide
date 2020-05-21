@@ -74,7 +74,7 @@ a library service.
 
 The example code for this extension is in the `library-service` subdirectory.
 
-Create a file `src/main/com/example/hello/HelloWorld.java` with the
+Create a file `src/main/com/example/hello/NativeService.java` with the
 following contents:
 
     package com.example.hello;
