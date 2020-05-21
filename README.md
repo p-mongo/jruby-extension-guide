@@ -36,3 +36,28 @@ following:
     hello = com.example.hello.HelloWorld.new
     hello.helloWorld
     # => "Hello, world!"
+
+
+Ruby Method Names
+-----------------
+
+`hello.helloWorld` is not very Ruby-esque. We can use the `JRubyMethod`
+annotation to define a Ruby name for our Java method, as follows:
+
+    import org.jruby.anno.JRubyMethod;
+
+    public class HelloWorld {
+      @JRubyMethod(name = "hello_world")
+      public String helloWorld() {
+        return "Hello, world!";
+      }
+    }
+
+This allows us to call the method more naturally:
+
+    hello = com.example.hello.HelloWorld.new
+    hello.hello_world
+    # => "Hello, world!"
+
+Note that the original method name (`helloWorld`) remains accessible in Ruby,
+even when we defined a Ruby alias for it.
