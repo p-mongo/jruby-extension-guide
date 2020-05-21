@@ -25,7 +25,9 @@ The simplest Java class definition looks as follows:
     }
 
 The JRuby extension uses [rake-compiler](https://github.com/rake-compiler/rake-compiler)
-to compile itself.
+to compile itself. To build the extension, execute:
+
+    rake compile
 
 Once compiled, to use this class from a Ruby program, we might do the
 following:
