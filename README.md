@@ -70,7 +70,7 @@ There is yet another minor issue with our extension - the class name is
 `com.example.hello.HelloWorld` and not `HelloWorld`. To fix this, we can use
 a library service.
 
-The example code for this extension is in the `native-service` subdirectory.
+The example code for this extension is in the `library-service` subdirectory.
 
 Create a file `src/main/com/example/hello/HelloWorld.java` with the
 following contents:
