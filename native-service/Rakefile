@@ -1,0 +1,17 @@
+require "rake"
+require "rake/extensiontask"
+require "rake/javaextensiontask"
+require 'rspec/core/rake_task'
+
+Rake::JavaExtensionTask.new do |ext|
+  ext.name = "hello-world-native"
+  ext.ext_dir = "src"
+end
+
+RSpec::Core::RakeTask.new(:rspec)
+
+task spec: :compile do
+  Rake::Task["rspec"].invoke
+end
+
+task default: :spec
