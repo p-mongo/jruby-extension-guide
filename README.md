@@ -162,7 +162,7 @@ Now the Ruby code looks like any other Ruby code. The fact that HelloWorld
 is implemented in Java is completely transparent.
 
 Constructor Arguments
-`````````````````````
+~~~~~~~~~~~~~~~~~~~~~
 
 Let's add an `Arg` class whose constructor takes a string argument, the
 salutation (to replace the default "hello"). To construct instances of
