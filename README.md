@@ -1,8 +1,6 @@
-JRuby Extension Guide
-=====================
+# JRuby Extension Guide
 
-Hello, World!
--------------
+## Hello, World!
 
 The `hello-world` subdirectory of this repository contains the simplest
 possible JRuby extension.
@@ -40,8 +38,7 @@ following:
     # => "Hello, world!"
 
 
-Ruby Method Names
------------------
+## Ruby Method Names
 
 `hello.helloWorld` is not very Ruby-esque. We can use the `JRubyMethod`
 annotation to define a Ruby name for our Java method, as follows:
@@ -65,8 +62,7 @@ Note that the original method name (`helloWorld`) remains accessible in Ruby,
 even when we defined a Ruby alias for it.
 
 
-Library Service
----------------
+## Library Service
 
 There is yet another minor issue with our extension - the class name is
 `com.example.hello.HelloWorld` and not `HelloWorld`. To fix this, we can use
@@ -161,8 +157,7 @@ To use this extension, we might do the following:
 Now the Ruby code looks like any other Ruby code. The fact that HelloWorld
 is implemented in Java is completely transparent.
 
-Constructor Arguments
-~~~~~~~~~~~~~~~~~~~~~
+## Constructor Arguments
 
 Let's add an `Arg` class whose constructor takes a string argument, the
 salutation (to replace the default "hello"). To construct instances of
