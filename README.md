@@ -160,3 +160,70 @@ To use this extension, we might do the following:
 
 Now the Ruby code looks like any other Ruby code. The fact that HelloWorld
 is implemented in Java is completely transparent.
+
+Constructor Arguments
+`````````````````````
+
+Let's add an `Arg` class whose constructor takes a string argument, the
+salutation (to replace the default "hello"). To construct instances of
+this class we need to separately define an allocator/constructor and an
+initializer. The allocation and construction code for `Arg` is going to be
+identical to the code used for `HelloWorld` class, and `initialize` method
+will be added to `Arg` to handle constructor arguments:
+
+    package com.example.hello;
+
+    import org.jruby.Ruby;
+    import org.jruby.RubyClass;
+    import org.jruby.RubyObject;
+    import org.jruby.RubyString;
+    import org.jruby.anno.JRubyMethod;
+    import org.jruby.runtime.builtin.IRubyObject;
+
+    public class Arg extends RubyObject {
+      public Arg(final Ruby runtime, final RubyClass rubyClass) {
+        super(runtime, rubyClass);
+      }
+      
+      private RubyString salutation;
+      
+      @JRubyMethod(name = "initialize")
+      public IRubyObject initialize(RubyString salutation) {
+        this.salutation = salutation;
+        return null;
+      }
+      
+      @JRubyMethod(name = "hello_world")
+      public RubyString helloWorld() {
+        return RubyString.newString(getRuntime(), salutation.toString() + " world");
+      }
+    }
+
+We added a `salutation` instance variable which is set in the `initialize`
+method. Note that the `initialize` annotation (`@JRubyMethod`) is
+required. The `Arg` constructor remains exactly the same as `HelloWorld`
+constructor.  We use the salutation in the `hello_world` method to return
+a custom greeting.
+
+The library service for `Arg` is essentially identical to the one for
+`HelloWorld`. All of the argument handling work is done by the `initialize`
+method:
+
+    public class NativeService implements BasicLibraryService {
+
+      public boolean basicLoad(final Ruby runtime) throws IOException {
+        RubyClass object = runtime.getObject();
+        
+        // ...
+        
+        RubyClass arg = object.defineClassUnder("Arg", object, new ObjectAllocator() {
+          public IRubyObject allocate(Ruby runtime, RubyClass rubyClass) {
+            return new Arg(runtime, rubyClass);
+          }
+        });
+
+        arg.defineAnnotatedMethods(Arg.class);
+        
+        return true;
+      }
+    }

@@ -20,6 +20,15 @@ public class NativeService implements BasicLibraryService {
     });
 
     helloWorld.defineAnnotatedMethods(HelloWorld.class);
+    
+    RubyClass arg = object.defineClassUnder("Arg", object, new ObjectAllocator() {
+      public IRubyObject allocate(Ruby runtime, RubyClass rubyClass) {
+        return new Arg(runtime, rubyClass);
+      }
+    });
+
+    arg.defineAnnotatedMethods(Arg.class);
+    
     return true;
   }
 }
